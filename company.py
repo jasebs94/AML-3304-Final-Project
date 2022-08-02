@@ -1,35 +1,19 @@
-from flask import Flask, request, render_template
+from flask import Flask, render_template, request, abort, Response
 from flask import jsonify
 import pandas as pd
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import json,traceback,os.path
-from pandas import ExcelWriter
-from pandas import ExcelFile
 from flask_ngrok import run_with_ngrok
-import dialogflow
 import sys
 import requests
-
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from matplotlib.figure import Figure
-
-from nltk.tokenize import word_tokenize  # to split sentences into words
-from nltk.corpus import stopwords  # to get a list of stopwords
-from collections import Counter  # to get words-frequency
-import requests  # this we will use to call API and get data
-import json  # to convert python dictionary to string format
-import nltk
-
-nltk.download('stopwords')
-
-from helper import dbHandler
+import urllib.request
 
 
 app = Flask(__name__)
 
 #run_with_ngrok(app)
-NEWS_API_KEY = "02045abef4484928879964f30d14957a"
+#NEWS_API_KEY = "02045abef4484928879964f30d14957a"
 
 # cross origin
 
@@ -40,7 +24,7 @@ CORS(app, resources={r"*": {"origins": "*"}})
 @app.route('/')
 def index():
 
-        return render_template('pages/login.html')
+        return render_template('pages/upload.html')
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
@@ -53,9 +37,38 @@ def upload():
         return render_template('pages/upload.html', message=message)
     return render_template('pages/upload.html')
     
-@app.route('/viewSentiment', methods=['GET', 'POST'])
-def viewSentiment():
-    return render_template('pages/displaySentiment.html')
+@app.route('/getWeather', methods=['GET', 'POST'])
+def getWeather():
+    city = 'Toronto'
+    API_KEY = 'cc691fccc58b46484c30d4dd69ba84c2'
+    print(city)
+    BASE_URL = "https://api.openweathermap.org/data/2.5/weather?"
+    URL = BASE_URL + "q=" + city + "&appid=" + API_KEY
+    response = requests.get(URL)
+    print(response)
+    if response.status_code == 200:
+        # getting data in the json format
+        data = response.json()
+        print(data)
+        # getting the main dict block
+        main = data['main']
+        # getting temperature
+        temperature = main['temp']
+        # getting the humidity
+        humidity = main['humidity']
+        # getting the pressure
+        pressure = main['pressure']
+        # weather report
+        report = data['weather']
+        print(f"{city:-^30}")
+        print(f"Temperature: {temperature}")
+        print(f"Humidity: {humidity}")
+        print(f"Pressure: {pressure}")
+        print(f"Weather Report: {report[0]['description']}")
+    else:
+        # showing the error message
+        print("Error in the HTTP request")
+    return data
 
     
 @app.route('/displaySentiment', methods=['GET', 'POST'])
