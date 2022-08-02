@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, abort, Response
 from flask import jsonify
 import pandas as pd
-from flask_cors import CORS
+#from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import json,traceback,os.path
 from flask_ngrok import run_with_ngrok
@@ -17,7 +17,7 @@ app = Flask(__name__)
 
 # cross origin
 
-CORS(app, resources={r"*": {"origins": "*"}})
+#CORS(app, resources={r"*": {"origins": "*"}})
 
 
 
