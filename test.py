@@ -1,12 +1,12 @@
 try:
     from company import app
-    import unittest
+    import unittest2
 
 except Exception as e:
     print("Some Modules are missing {}".format(e))
     
 
-class FlaskTest(unittest.TestCase):
+class FlaskTest(unittest2.TestCase):
     
     def test_index(self):
         tester = app.test_client(self)
@@ -20,4 +20,4 @@ class FlaskTest(unittest.TestCase):
         self.assertEqual(response.content_type,"text/html; charset=utf-8")
      
 if __name__ == '__main__':
-    unittest.main()
+    unittest2.main()
