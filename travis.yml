@@ -1,17 +1,17 @@
 os:
-  - linux
+  linux
 
 dist: xenial
 
 language: python
 
 script:
-  - python test.py -v
+  python test.py -v
 
 deploy:
-  - provider: pages
-  - skip_cleanup: true
-  - github_token: $github_token
-  - local_dir: build
+  provider: pages
+  skip_cleanup: true
+  github_token: $github_token
+  local_dir: build
   on:
-   - branch: master
+    branch: master
