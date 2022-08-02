@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request, abort, Response
-from flask import jsonify
-import pandas as pd
+#from flask import jsonify
+#import pandas as pd
 #from flask_cors import CORS
-from werkzeug.utils import secure_filename
-import json,traceback,os.path
-from flask_ngrok import run_with_ngrok
-import sys
-import requests
-import urllib.request
+#from werkzeug.utils import secure_filename
+#import json,traceback,os.path
+#from flask_ngrok import run_with_ngrok
+#import sys
+#import requests
+#import urllib.request
 
 
 app = Flask(__name__)
