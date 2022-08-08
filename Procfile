@@ -1,0 +1,1 @@
+web: uwsgi --http-socket :$PORT --ini uwsgi.ini
